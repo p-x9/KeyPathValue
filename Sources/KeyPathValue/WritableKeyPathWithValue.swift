@@ -18,11 +18,21 @@ public struct WritableKeyPathWithValue<Root> {
     /// assign value
     public let apply: (inout Root) -> Void
 
-    /// initialize with keyPath and value
+    /// initialize with writable keyPath and value
     public init<Value>(_ keyPath: WritableKeyPath<Root, Value>, _ value: Value) {
         self.keyPath = keyPath
         self.value = value
         self.apply = { $0[keyPath: keyPath] = value }
+    }
+
+    /// initialize with partial keyPath and value
+    @_disfavoredOverload
+    public init?<Value>(_ keyPath: PartialKeyPath<Root>, _ value: Value) {
+        guard let keyPath = keyPath as? WritableKeyPath<Root, Value> else {
+            return nil
+        }
+
+        self.init(keyPath, value)
     }
 }
 
