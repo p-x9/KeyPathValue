@@ -18,7 +18,7 @@ final class KeyPathWithValueTests: XCTestCase {
         ]
 
         appliers.forEach { applier in
-            applier.apply(&structItem)
+            applier.apply(to: &structItem)
         }
 
         XCTAssertEqual(structItem.number, 123)
@@ -32,7 +32,7 @@ final class KeyPathWithValueTests: XCTestCase {
         ]
 
         appliers.forEach { applier in
-            applier.apply(classItem)
+            applier.apply(to: classItem)
         }
 
         XCTAssertEqual(classItem.number, 123)
@@ -42,7 +42,7 @@ final class KeyPathWithValueTests: XCTestCase {
     func testWritableKeyPathWithValuePrivateSet() {
         let applier = WritableKeyPathWithValue<StructItem>(\.privateSetProperty, 123.0)
 
-        applier?.apply(&structItem)
+        applier?.apply(to: &structItem)
 
         XCTAssertEqual(structItem.privateSetProperty, 123.0)
     }
@@ -50,7 +50,7 @@ final class KeyPathWithValueTests: XCTestCase {
     func testReferenceWritableKeyPathWithValuePrivateSet() {
         let applier = ReferenceWritableKeyPathWithValue<ClassItem>(\.privateSetProperty, 123.0)
 
-        applier?.apply(classItem)
+        applier?.apply(to: classItem)
 
         XCTAssertEqual(classItem.privateSetProperty, 123.0)
     }

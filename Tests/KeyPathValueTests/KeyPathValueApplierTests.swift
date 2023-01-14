@@ -23,10 +23,10 @@ final class KeyPathValueApplierTests: XCTestCase {
         var applier: WritableKeyPathValueApplier<StructItem>
 
         applier = .init(\.number)
-        applier.apply(123, &structItem)
+        applier.apply(123, to: &structItem)
 
         applier = .init(\.object)
-        applier.apply(Object(string: "123"), &structItem)
+        applier.apply(Object(string: "123"), to: &structItem)
 
         XCTAssertEqual(structItem.number, 123)
         XCTAssertEqual(structItem.object, .init(string: "123"))
@@ -36,10 +36,10 @@ final class KeyPathValueApplierTests: XCTestCase {
         var applier: ReferenceWritableKeyPathValueApplier<ClassItem>
 
         applier = .init(\.number)
-        applier.apply(123, classItem)
+        applier.apply(123, to: classItem)
 
         applier = .init(\.object)
-        applier.apply(Object(string: "123"), classItem)
+        applier.apply(Object(string: "123"), to: classItem)
 
         XCTAssertEqual(classItem.number, 123)
         XCTAssertEqual(classItem.object, .init(string: "123"))

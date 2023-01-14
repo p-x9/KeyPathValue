@@ -16,13 +16,13 @@ public struct ReferenceWritableKeyPathWithValue<Root: AnyObject> {
     /// Value to be assigned
     public let value: Any
     /// assign value
-    public let apply: (Root) -> Void
+    public let _apply: (Root) -> Void
 
     /// initialize with reference writable keyPath and value
     public init<Value>(_ keyPath: ReferenceWritableKeyPath<Root, Value>, _ value: Value) {
         self.keyPath = keyPath
         self.value = value
-        self.apply = { $0[keyPath: keyPath] = value }
+        self._apply = { $0[keyPath: keyPath] = value }
     }
 
     /// initialize with partial keyPath and value
@@ -34,14 +34,19 @@ public struct ReferenceWritableKeyPathWithValue<Root: AnyObject> {
 
         self.init(keyPath, value)
     }
+
+    /// assign value
+    public func apply(to target: Root) {
+        _apply(target)
+    }
 }
 
 extension ReferenceWritableKeyPathWithValue {
     public init(_ keyValueApplier: ReferenceWritableKeyPathValueApplier<Root>, value: Any) {
         self.keyPath = keyValueApplier.keyPath
         self.value = value
-        self.apply = {
-            keyValueApplier.apply(value, $0)
+        self._apply = {
+            keyValueApplier.apply(value, to: $0)
         }
     }
 }
