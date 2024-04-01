@@ -1,9 +1,9 @@
 //
 //  WritableKeyPathValueApplier.swift
-//  
+//
 //
 //  Created by p-x9 on 2022/11/04.
-//  
+//
 //
 
 import Foundation
@@ -17,7 +17,7 @@ public struct WritableKeyPathValueApplier<Root> {
     private let _apply: (Any, inout Root) -> Bool
 
     /// initialize with keyPath
-    public init<Value>(_ keyPath: WritableKeyPath<Root,Value>) {
+    public init<Value>(_ keyPath: WritableKeyPath<Root, Value>) {
         self.keyPath = keyPath
         self._apply = {
             guard let value = $0 as? Value else { return false }
